@@ -248,7 +248,7 @@ public class BudgetPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if ("addBudget".equals(e.getActionCommand())) {
 			Budget budget = new Budget(name_text.getText(), category_text.getText(),
-					Double.parseDouble(amount_text.getText()),
+					Double.parseDouble(amount_text.getText().replace("$", "").replace(",", "")),
 					freq_text.getText(), Integer.parseInt(day_text.getText()));
 			MongoDBConnection.getMongoDBConnection().insertBudget(budget);
 		} else if ("removeBudget".equals(e.getActionCommand())) {
@@ -284,7 +284,7 @@ public class BudgetPanel extends JPanel implements ActionListener {
 			}
 			Budget budget = new Budget((String) budgetTable.getValueAt(row, 0),
 					(String) budgetTable.getValueAt(row, 2),
-					(double) budgetTable.getValueAt(row, 1),
+					Double.parseDouble(((String)budgetTable.getValueAt(row, 1)).replace("$","").replace(",","")),
 					(String) budgetTable.getValueAt(row, 3),
 					fin_day);
 			MongoDBConnection.getMongoDBConnection().removeBudget(budget);

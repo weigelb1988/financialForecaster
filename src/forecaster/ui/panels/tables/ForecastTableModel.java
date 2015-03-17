@@ -115,14 +115,14 @@ public class ForecastTableModel extends AbstractTableModel {
 			forcast.setName((String) value);
 			break;
 		case 2:
-			double val = Double.parseDouble(((String)value).substring(1));
+			double val = Double.parseDouble(((String)value).replace("$","").replace(",",""));
 			forcast.setAmount((double) val);
 			break;
 		case 3:
 			forcast.setCategory((String) value);
 			break;
 		case 4:
-			double val2 = Double.parseDouble(((String)value).substring(1));
+			double val2 = Double.parseDouble(((String)value).replace("$","").replace(",",""));
 			forcast.setTotal((double) val2);
 			break;
 		}

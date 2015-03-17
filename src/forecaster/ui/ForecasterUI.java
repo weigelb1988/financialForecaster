@@ -25,7 +25,7 @@ public class ForecasterUI extends JFrame {
 	public ForecasterUI() {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-			UIManager.put("Table.alternateRowColor", Color.LIGHT_GRAY);
+			UIManager.put("Table.alternateRowColor",  new Color(193,205,193));
 			
 			UIManager.put("Table.rowHeight", 28);
 		} catch (ClassNotFoundException | InstantiationException

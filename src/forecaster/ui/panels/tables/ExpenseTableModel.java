@@ -104,7 +104,7 @@ public class ExpenseTableModel extends AbstractTableModel {
 			expense.setName((String) value);
 			break;
 		case 1:
-			double val = Double.parseDouble(((String)value).substring(1));
+			double val = Double.parseDouble(((String)value).replace("$","").replace(",",""));
 			expense.setAmount((double) val);
 			break;
 		case 2:

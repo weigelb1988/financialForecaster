@@ -86,4 +86,18 @@ public class Forecast {
 	public void setTotal(double total) {
 		this.total = total;
 	}
+	
+	public String toString(){
+		StringBuffer sb = new StringBuffer();
+		sb.append(this.date);
+		sb.append(" - ");
+		sb.append(this.name);
+		sb.append(" - ");
+		sb.append(this.category);
+		sb.append(" - ");
+		sb.append(this.amount);
+		sb.append(" - ");
+		sb.append(this.total);
+		return sb.toString();
+	}
 }

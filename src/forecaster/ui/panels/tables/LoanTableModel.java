@@ -107,7 +107,7 @@ public class LoanTableModel extends AbstractTableModel {
  			loan.setName((String) value);
  			break;
  		 case 1:
- 			double val = Double.parseDouble(((String)value).substring(1));
+ 			double val = Double.parseDouble(((String)value).replace("$","").replace(",",""));
  			loan.setAmount((double)val);
  			break;
  		 case 2:
@@ -116,7 +116,7 @@ public class LoanTableModel extends AbstractTableModel {
  		 	loan.setInterestRate(val1);
  		 	break;
  		 case 3:
- 			double val2 = Double.parseDouble(((String)value).substring(1));
+ 			double val2 = Double.parseDouble(((String)value).replace("$","").replace(",",""));
  		 	loan.setMonthlyPayment((double)val2);
  		 	break;
  		 case 4:

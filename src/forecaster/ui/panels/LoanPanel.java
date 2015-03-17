@@ -282,10 +282,10 @@ public class LoanPanel extends JPanel implements ActionListener {
 		} else if ("removeLoan".equals(e.getActionCommand())) {
 			int row = loanTable.getSelectedRow();
 			Loan loan = new Loan((String) loanTable.getValueAt(row, 0),
-					Double.parseDouble(((String)loanTable.getValueAt(row, 1)).substring(1).replace(",", "")),
-					(double) loanTable.getValueAt(row, 2),
+					Double.parseDouble(((String)loanTable.getValueAt(row, 1)).replace("$", "").replace(",", "")),
+					Double.parseDouble(((String)loanTable.getValueAt(row, 2)).replace("%",""))/100,
 					(int) loanTable.getValueAt(row, 4),
-					(double) Double.parseDouble(((String)loanTable.getValueAt(row, 3)).substring(1).replace(",", "")),
+					(double) Double.parseDouble(((String)loanTable.getValueAt(row, 3)).replace("$", "").replace(",", "")),
 					(int) loanTable.getValueAt(row, 5));
 			MongoDBConnection.getMongoDBConnection().removeLoan(loan);
 		} else if ("editLoan".equals(e.getActionCommand())) {

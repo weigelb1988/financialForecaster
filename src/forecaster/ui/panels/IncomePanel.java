@@ -253,10 +253,14 @@ public class IncomePanel extends JPanel implements ActionListener {
 					freq_text.getText(), Double.parseDouble(amount_text
 							.getText()));
 			MongoDBConnection.getMongoDBConnection().insertIncome(income);
-			
+
 		} else if ("removeIncome".equals(e.getActionCommand())) {
 			int row = incomeTable.getSelectedRow();
-			Income income = new Income((String)incomeTable.getValueAt(row, 0), (String)incomeTable.getValueAt(row, 2), Double.parseDouble(((String)incomeTable.getValueAt(row, 1)).substring(1).replace(",", "")));
+			Income income = new Income(
+					(String) incomeTable.getValueAt(row, 0),
+					(String) incomeTable.getValueAt(row, 2),
+					Double.parseDouble(((String) incomeTable.getValueAt(row, 1))
+							.replace("$", "").replace(",", "")));
 			MongoDBConnection.getMongoDBConnection().removeIncome(income);
 		} else if ("editIncome".equals(e.getActionCommand())) {
 			System.out.println("Attempt t oedit");

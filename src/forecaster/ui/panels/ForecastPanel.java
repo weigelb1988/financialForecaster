@@ -34,6 +34,7 @@ import forecaster.money.Income;
 import forecaster.money.Info;
 import forecaster.money.Loan;
 import forecaster.ui.panels.tables.ForecastTableModel;
+import forecaster.ui.panels.trees.ForecastTree;
 
 public class ForecastPanel extends JPanel implements ActionListener {
 
@@ -46,14 +47,22 @@ public class ForecastPanel extends JPanel implements ActionListener {
 
 	private JComponent expenseComponent = null;
 	
-	private ForecastTableModel ftm;
-	private JTable forcastTable;
+	private ForecastTree ftm;
 	private LinkedList<Forecast> forcastExpenses = null;
+	private JScrollPane scrollPane;
+
+	public JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+
+	public void setScrollPane(JScrollPane scrollPane) {
+		this.scrollPane = scrollPane;
+	}
 
 	public ForecastPanel() {
 		forcastExpenses = MongoDBConnection.getMongoDBConnection()
 				.fillForcast();
-		ftm = new ForecastTableModel(forcastExpenses);
+		ftm = new ForecastTree();
 		expenseComponent = makeExpensePanel("Forcast");
 	}
 
@@ -82,59 +91,16 @@ public class ForecastPanel extends JPanel implements ActionListener {
 
 		genLabelCons.setY(Spring.constant(7));
 	}
-	private JPopupMenu createPopupMenu() {
-		JMenuItem item;
-		JPopupMenu popup = new JPopupMenu();
-		popup.add(item = new JMenuItem("Remove Expense"));
-		item.addActionListener(this);
-		item.setActionCommand("removeForcast");
-
-		return popup;
-	}
+	
 	
 	private void addCurrentForcastComponents() {
 
 		SpringLayout layout = (SpringLayout) forcastPanel.getLayout();
 
-		forcastTable = new JTable(ftm);
-
-		forcastTable
-				.setPreferredScrollableViewportSize(new Dimension(1300, 500));
-
-		forcastTable.setFillsViewportHeight(true);
-
-		forcastTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-				int r = forcastTable.rowAtPoint(e.getPoint());
-				if (r >= 0 && r < forcastTable.getRowCount()) {
-					forcastTable.setRowSelectionInterval(r, r);
-				} else {
-					forcastTable.clearSelection();
-				}
-				int rowIndex = forcastTable.getSelectedRow();
-				if (rowIndex < 0) {
-					return;
-				}
-				if (e.getButton() == MouseEvent.BUTTON3
-						&& e.getComponent() instanceof JTable) {
-					JPopupMenu popup = createPopupMenu();
-					popup.show(e.getComponent(), e.getX(), e.getY());
-				}
-			}
-
-		});
-
-		DefaultTableCellRenderer centerRender = new DefaultTableCellRenderer();
-		centerRender.setHorizontalAlignment(JLabel.CENTER);
-		forcastTable.setDefaultRenderer(String.class, centerRender);
-		forcastTable.setDefaultRenderer(Integer.class, centerRender);
-		forcastTable.setDefaultRenderer(Double.class, centerRender);
-		forcastTable.setShowGrid(false);
-		JScrollPane scrollPane = new JScrollPane(forcastTable);
+		
+		scrollPane = new JScrollPane(ftm.getTree());
 		forcastPanel.add(scrollPane);
-		forcastTable.setIntercellSpacing(new Dimension(0,0));
+	
 
 		layout.putConstraint(SpringLayout.EAST, scrollPane, -5,
 				SpringLayout.EAST, forcastPanel);
@@ -161,12 +127,14 @@ public class ForecastPanel extends JPanel implements ActionListener {
 		}else if("forcast".equals(e.getActionCommand())){
 			MongoDBConnection.getMongoDBConnection().removeForcastData();
 			generateForcastData();
+			
+			
+			
 		}
 
 		forcastExpenses = MongoDBConnection.getMongoDBConnection()
 				.fillForcast();
-		ftm.setData(forcastExpenses);
-		ftm.fireTableDataChanged();
+			
 		forcastPanel.revalidate();
 		forcastPanel.repaint();
 	}
@@ -284,7 +252,7 @@ public class ForecastPanel extends JPanel implements ActionListener {
 			for (Income income : incomes) {
 				if (income.getFrequency().equals("bi-weekly")
 						&& date.getDayOfWeek() == 5
-						&& biweeklyPayCount % 2 == 0) {
+						&& biweeklyPayCount % 2 == 1) {
 					currentAmount = currentAmount + income.getAmount();
 					Forecast forecast = new Forecast(income.getName(),
 							date.toString(), "Income", income.getAmount(),
@@ -314,4 +282,6 @@ public class ForecastPanel extends JPanel implements ActionListener {
 		}
 		return highest;
 	}
+	
+	
 }

@@ -125,7 +125,7 @@ public class BudgetTableModel extends AbstractTableModel {
 			budget.setName((String) value);
 			break;
 		case 1:
-			double val2 = Double.parseDouble(((String)value).substring(1));
+			double val2 = Double.parseDouble(((String)value).replace("$","").replace(",",""));
 			budget.setAmount((double) val2);
 			break;
 		case 2:

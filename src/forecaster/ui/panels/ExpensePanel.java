@@ -226,7 +226,7 @@ public class ExpensePanel extends JPanel implements ActionListener {
 			Expense expense = new Expense((String) expenseTable.getValueAt(row,
 					0), (String) expenseTable.getValueAt(row, 3),(String) expenseTable.getValueAt(row,
 							2),
-					Double.parseDouble(((String)expenseTable.getValueAt(row, 1)).substring(1))
+					Double.parseDouble(((String)expenseTable.getValueAt(row, 1)).replace("$", "").replace(",", ""))
 					);
 			MongoDBConnection.getMongoDBConnection().removeExpense(expense);
 		} else if ("editBudget".equals(e.getActionCommand())) {
