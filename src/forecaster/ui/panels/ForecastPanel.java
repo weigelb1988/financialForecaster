@@ -117,17 +117,9 @@ public class ForecastPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if ("addExpense".equals(e.getActionCommand())) {
-			
-			
-		} else if ("removeForcast".equals(e.getActionCommand())) {
-		
-		} else if ("editBudget".equals(e.getActionCommand())) {
-			System.out.println("Attempt t oedit");
-		}else if("forcast".equals(e.getActionCommand())){
+		if("forcast".equals(e.getActionCommand())){
 			MongoDBConnection.getMongoDBConnection().removeForcastData();
 			generateForcastData();
-			
 			
 			
 		}
